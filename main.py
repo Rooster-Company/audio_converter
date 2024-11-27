@@ -3,6 +3,7 @@ from urllib.request import urlopen
 from pydub import AudioSegment
 from io import BytesIO
 from pydantic import BaseModel
+import os
 
 
 def convert_to_mp3(file_url):
@@ -27,3 +28,9 @@ async def root():
 async def convert(item: UrlAudio):
     converted = convert_to_mp3(item.url).read1()
     return Response(content=converted, media_type="audio/mp3")
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=os.getenv("PORT", 8000))
+    
