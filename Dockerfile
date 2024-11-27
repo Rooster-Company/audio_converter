@@ -15,4 +15,4 @@ RUN apt-get update && apt-get install -y ffmpeg
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host", "fastapi.railway.internal", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--port", "8000"]
