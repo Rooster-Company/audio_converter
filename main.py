@@ -25,5 +25,5 @@ async def root():
 
 @app.post("/convert")
 async def convert(item: UrlAudio):
-    converted = convert_to_mp3(item.url)
+    converted = convert_to_mp3(item.url).read1()
     return Response(content=converted, media_type="audio/mp3")
