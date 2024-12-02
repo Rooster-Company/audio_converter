@@ -34,7 +34,7 @@ async def root():
 @app.post("/convert/url")
 async def convert_url(item: UrlAudio):
     converted = convert_from_url(item.url).read1()
-    return Response(content=converted, media_type="audio/wav")
+    return Response(content=converted, media_type="audio/wav", headers={"Content-Disposition": "attachment; filename=converted.wav"})
 
 @app.post("/convert/file")
 async def convert_file(
@@ -42,7 +42,7 @@ async def convert_file(
 ):
     file = await file.read()
     converted = convert_from_file(file).read1()
-    return Response(content=converted, media_type="audio/wav")
+    return Response(content=converted, media_type="audio/wav", headers={"Content-Disposition": "attachment; filename=converted.wav"})
 
 
 if __name__ == "__main__":
