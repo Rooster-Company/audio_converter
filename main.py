@@ -7,16 +7,16 @@ import os
 from typing import Annotated
 
 
-def convert_to_mp3_url(file_url):
+def convert_from_url(file_url):
     file = BytesIO(urlopen(file_url).read())
     converted = BytesIO()
-    AudioSegment.from_file(file).export(converted, format='mp3')
+    AudioSegment.from_file(file).export(converted, format='wav')
     return converted
 
-def convert_to_mp3_file(file_bytes):
+def convert_from_file(file_bytes):
     file = BytesIO(file_bytes)
     converted = BytesIO()
-    AudioSegment.from_file(file).export(converted, format='mp3')
+    AudioSegment.from_file(file).export(converted, format='wav')
     return converted
 
 
@@ -33,16 +33,16 @@ async def root():
 
 @app.post("/convert/url")
 async def convert_url(item: UrlAudio):
-    converted = convert_to_mp3_url(item.url).read1()
-    return Response(content=converted, media_type="audio/mp3")
+    converted = convert_from_url(item.url).read1()
+    return Response(content=converted, media_type="audio/wav")
 
 @app.post("/convert/file")
 async def convert_file(
-    file: UploadFile
+    file: UploadFile,
 ):
     file = await file.read()
-    converted = convert_to_mp3_file(file).read1()
-    return Response(content=converted, media_type="audio/mp3")
+    converted = convert_from_file(file).read1()
+    return Response(content=converted, media_type="audio/wav")
 
 
 if __name__ == "__main__":
